@@ -12,42 +12,45 @@
 <body>
   <div id="app1">
     <table class="schedule">
-      <tr class="date-row">
-        <td colspan="3">2024/12/15</td>
-      </tr>
-      <tr>
-        <th>時間</th>
-        <th>モード</th>
-        <th>ステージ</th>
-      </tr>
-      <tr v-for="item in itemList">
-        <td class="time-slot">{{ item.start_time }}</td>
-        <td>
-          {{ item.rule.name }}
-        </td>
-        <td class="stage">
-          <div class="stage-list">
-            <div>
-              <div class="stage-name">{{ item.stages[0].name }}</div><img :src="item.stages[0].image"
-                alt="{{ item.stages[0].name }}">
+      <template v-for="schedule in scheduleList">
+        <tr class="date-row">
+          <td colspan="3">2024/12/15</td>
+        </tr>
+        <tr>
+          <th>時間</th>
+          <th>モード</th>
+          <th>ステージ</th>
+        </tr>
+        <tr v-for="item in schedule">
+          <td class="time-slot">{{ item.start_time }}</td>
+          <td>
+            {{ item.rule.name }}
+          </td>
+          <td class="stage">
+            <div class="stage-list">
+              <div>
+                <div class="stage-name">{{ item.stages[0].name }}</div><img :src="item.stages[0].image"
+                  alt="{{ item.stages[0].name }}">
+              </div>
+              <div>
+                <div class="stage-name">{{ item.stages[1].name }}</div><img :src="item.stages[1].image"
+                  alt="{{ item.stages[1].name }}">
+              </div>
             </div>
-            <div>
-              <div class="stage-name">{{ item.stages[1].name }}</div><img :src="item.stages[1].image"
-                alt="{{ item.stages[1].name }}">
-            </div>
-          </div>
-        </td>
-      </tr>
-      <!-- 追加の行をここに挿入 -->
+          </td>
+        </tr>
+      </template>
     </table>
+    </template>
+    <!-- 追加の行をここに挿入 -->
   </div>
 
   <script>
-    var itemList = []
+    var scheduleList = []
     const App1 = {
       data() {
         return {
-          itemList: itemList
+          scheduleList: scheduleList
         }
       }
     }
@@ -56,7 +59,7 @@
       .then(response => {
         // リクエストが成功した場合、データを表示
         //Vueコンポーネントを定義
-        itemList = response.data.results;
+        scheduleList.push(response.data.results);
         const app = Vue.createApp(App1) //Vueアプリケーションを作成
         app.mount('#app1') //VueアプリケーションをHTML要素にマウント
       })
