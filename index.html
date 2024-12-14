@@ -7,75 +7,158 @@
   <script src="https://unpkg.com/vue@3.0.0"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* タブの共通スタイル */
+    #tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      border-bottom: 2px solid #ccc;
+    }
+
+    #tabs div {
+      padding: 10px 20px;
+      margin: 0;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      background-color: #f9f9f9;
+    }
+
+    #tabs div:hover {
+      background-color: #ddd;
+    }
+
+    /* 各タブごとのアクティブ時のスタイル */
+    #tabs .tab-open.active {
+      background-color: #00c8ff;
+      color: white;
+      border-top: 2px solid #0078d7;
+      font-weight: bold;
+    }
+
+    #tabs .tab-challenge.active {
+      background-color: #ff5733;
+      color: white;
+      border-top: 2px solid #c70039;
+      font-weight: bold;
+    }
+
+    #tabs .tab-regular.active {
+      background-color: #28a745;
+      color: white;
+      border-top: 2px solid #1e7e34;
+      font-weight: bold;
+    }
+
+    #tabs .tab-xmatch.active {
+      background-color: #6f42c1;
+      color: white;
+      border-top: 2px solid #5a32a3;
+      font-weight: bold;
+    }
+
+    #tabs .tab-salmon.active {
+      background-color: #ffc107;
+      color: white;
+      border-top: 2px solid #e0a800;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app1">
-    <table class="schedule">
-      <template v-for="schedule in scheduleList">
-        <tr class="date-row">
-          <td colspan="3">2024/12/15</td>
-        </tr>
-        <tr>
-          <th>時間</th>
-          <th>モード</th>
-          <th>ステージ</th>
-        </tr>
-        <tr v-for="item in schedule">
-          <td class="time-slot">{{ item.start_time_view }}</td>
-          <td>
-            {{ item.rule.name }}
-          </td>
-          <td class="stage">
-            <div class="stage-list">
-              <div>
-                <div class="stage-name">{{ item.stages[0].name }}</div>
-                <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+    <!-- タブ切り替え部分 -->
+    <div id="tabs">
+      <div @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }" class="tab-open">オープン</div>
+      <div @click="currentTab = 'challenge'" :class="{ active: currentTab === 'challenge' }" class="tab-challenge">チャレンジ
+      </div>
+      <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular">レギュラー</div>
+      <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch">Xマッチ</div>
+      <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモン</div>
+    </div>
+
+    <!-- オープン内容 -->
+    <div id="open" v-show="currentTab === 'open'">
+      <table class="schedule">
+        <template v-for="schedule in scheduleList">
+          <tr class="date-row">
+            <td colspan="3">2024/12/15</td>
+          </tr>
+          <tr>
+            <th>時間</th>
+            <th>モード</th>
+            <th>ステージ</th>
+          </tr>
+          <tr v-for="item in schedule">
+            <td class="time-slot">{{ item.start_time_view }}</td>
+            <td>
+              {{ item.rule.name }}
+            </td>
+            <td class="stage">
+              <div class="stage-list">
+                <div>
+                  <div class="stage-name">{{ item.stages[0].name }}</div>
+                  <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+                </div>
+                <div>
+                  <div class="stage-name">{{ item.stages[1].name }}</div>
+                  <img :src="item.stages[1].image" :alt="item.stages[1].name" />
+                </div>
               </div>
-              <div>
-                <div class="stage-name">{{ item.stages[1].name }}</div>
-                <img :src="item.stages[1].image" :alt="item.stages[1].name" />
-              </div>
-            </div>
-          </td>
-        </tr>
-      </template>
-    </table>
-    <!-- 追加の行をここに挿入 -->
+            </td>
+          </tr>
+        </template>
+      </table>
+    </div>
+
+    <!-- 他のタブ内容 -->
+    <div id="challenge" v-show="currentTab === 'challenge'">
+      <p>チャレンジのコンテンツをここに表示します。</p>
+    </div>
+    <div id="regular" v-show="currentTab === 'regular'">
+      <p>レギュラーのコンテンツをここに表示します。</p>
+    </div>
+    <div id="xmatch" v-show="currentTab === 'xmatch'">
+      <p>Xマッチのコンテンツをここに表示します。</p>
+    </div>
+    <div id="salmon" v-show="currentTab === 'salmon'">
+      <p>サーモンのコンテンツをここに表示します。</p>
+    </div>
   </div>
 
   <script>
     function convertTime(results) {
       results.forEach(function (result) {
         const date = new Date(result['start_time']);
-        // 時と分を取得してフォーマット
         const hours = date.getHours().toString().padStart(2, "0");
         const minutes = date.getMinutes().toString().padStart(2, "0");
         const timeString = `${hours}:${minutes}～`;
         result['start_time_view'] = timeString;
       });
-
       return results;
     }
-    var scheduleList = []
+
+    var scheduleList = [];
     const App1 = {
       data() {
         return {
-          scheduleList: scheduleList
-        }
+          scheduleList: scheduleList,
+          currentTab: 'open' // 初期表示は「オープン」
+        };
       }
-    }
-    // GETリクエストを実行
+    };
+
+    // データを取得
     axios.get('https://spla3.yuu26.com/api/bankara-open/schedule')
       .then(response => {
-        // リクエストが成功した場合、データを表示
-        //Vueコンポーネントを定義
         scheduleList.push(convertTime(response.data.results));
-        const app = Vue.createApp(App1) //Vueアプリケーションを作成
-        app.mount('#app1') //VueアプリケーションをHTML要素にマウント
+        const app = Vue.createApp(App1);
+        app.mount('#app1');
       })
       .catch(error => {
-        // リクエストが失敗した場合、エラーを表示
         console.error('Error:', error);
       });
   </script>
