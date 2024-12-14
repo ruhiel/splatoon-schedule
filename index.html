@@ -83,7 +83,7 @@
     <!-- オープン内容 -->
     <div id="open" v-show="currentTab === 'open'">
       <table class="schedule">
-        <template v-for="schedule in scheduleList">
+        <template v-for="schedule in scheduleOpenList">
           <tr class="date-row">
             <td colspan="3">2024/12/15</td>
           </tr>
@@ -116,7 +116,36 @@
 
     <!-- 他のタブ内容 -->
     <div id="challenge" v-show="currentTab === 'challenge'">
-      <p>チャレンジのコンテンツをここに表示します。</p>
+      <table class="schedule">
+        <template v-for="schedule in scheduleChallengeList">
+          <tr class="date-row">
+            <td colspan="3">2024/12/15</td>
+          </tr>
+          <tr>
+            <th>時間</th>
+            <th>モード</th>
+            <th>ステージ</th>
+          </tr>
+          <tr v-for="item in schedule">
+            <td class="time-slot">{{ item.start_time_view }}</td>
+            <td>
+              {{ item.rule.name }}
+            </td>
+            <td class="stage">
+              <div class="stage-list">
+                <div>
+                  <div class="stage-name">{{ item.stages[0].name }}</div>
+                  <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+                </div>
+                <div>
+                  <div class="stage-name">{{ item.stages[1].name }}</div>
+                  <img :src="item.stages[1].image" :alt="item.stages[1].name" />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </table>
     </div>
     <div id="regular" v-show="currentTab === 'regular'">
       <p>レギュラーのコンテンツをここに表示します。</p>
@@ -141,20 +170,23 @@
       return results;
     }
 
-    var scheduleList = [];
+    var scheduleOpenList = [];
+    var scheduleChallengeList = [];
     const App1 = {
       data() {
         return {
-          scheduleList: scheduleList,
+          scheduleOpenList: scheduleOpenList,
+          scheduleChallengeList: scheduleChallengeList,
           currentTab: 'open' // 初期表示は「オープン」
         };
       }
     };
 
     // データを取得
-    axios.get('https://spla3.yuu26.com/api/bankara-open/schedule')
+    axios.get('https://spla3.yuu26.com/api/schedule')
       .then(response => {
-        scheduleList.push(convertTime(response.data.results));
+        scheduleOpenList.push(convertTime(response.data.result.bankara_open));
+        scheduleChallengeList.push(convertTime(response.data.result.bankara_challenge));
         const app = Vue.createApp(App1);
         app.mount('#app1');
       })
