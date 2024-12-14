@@ -22,7 +22,7 @@
           <th>ステージ</th>
         </tr>
         <tr v-for="item in schedule">
-          <td class="time-slot">{{ item.start_time }}</td>
+          <td class="time-slot">{{ item.start_time_view }}</td>
           <td>
             {{ item.rule.name }}
           </td>
@@ -45,6 +45,18 @@
   </div>
 
   <script>
+    function convertTime(results) {
+      results.forEach(function (result) {
+        const date = new Date(result['start_time']);
+        // 時と分を取得してフォーマット
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const timeString = `${hours}:${minutes}～`;
+        result['start_time_view'] = timeString;
+      });
+
+      return results;
+    }
     var scheduleList = []
     const App1 = {
       data() {
@@ -58,7 +70,7 @@
       .then(response => {
         // リクエストが成功した場合、データを表示
         //Vueコンポーネントを定義
-        scheduleList.push(response.data.results);
+        scheduleList.push(convertTime(response.data.results));
         const app = Vue.createApp(App1) //Vueアプリケーションを作成
         app.mount('#app1') //VueアプリケーションをHTML要素にマウント
       })
