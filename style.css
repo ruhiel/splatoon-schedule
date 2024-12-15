@@ -74,3 +74,61 @@ body {
     font-size: 1.2em;
     font-weight: bold;
 }
+
+/* タブの共通スタイル */
+#tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    border-bottom: 2px solid #ccc;
+}
+
+#tabs div {
+    padding: 10px 20px;
+    margin: 0;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f9f9f9;
+}
+
+#tabs div:hover {
+    background-color: #ddd;
+}
+
+/* 各タブごとのアクティブ時のスタイル */
+#tabs .tab-open.active {
+    background-color: #00c8ff;
+    color: white;
+    border-top: 2px solid #0078d7;
+    font-weight: bold;
+}
+
+#tabs .tab-challenge.active {
+    background-color: #ff5733;
+    color: white;
+    border-top: 2px solid #c70039;
+    font-weight: bold;
+}
+
+#tabs .tab-regular.active {
+    background-color: #28a745;
+    color: white;
+    border-top: 2px solid #1e7e34;
+    font-weight: bold;
+}
+
+#tabs .tab-xmatch.active {
+    background-color: #6f42c1;
+    color: white;
+    border-top: 2px solid #5a32a3;
+    font-weight: bold;
+}
+
+#tabs .tab-salmon.active {
+    background-color: #ffc107;
+    color: white;
+    border-top: 2px solid #e0a800;
+    font-weight: bold;
+}

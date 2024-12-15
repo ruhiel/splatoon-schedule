@@ -7,65 +7,7 @@
   <script src="https://unpkg.com/vue@3.0.0"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* タブの共通スタイル */
-    #tabs {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-      border-bottom: 2px solid #ccc;
-    }
-
-    #tabs div {
-      padding: 10px 20px;
-      margin: 0;
-      font-size: 16px;
-      cursor: pointer;
-      border: 1px solid #ccc;
-      border-bottom: none;
-      background-color: #f9f9f9;
-    }
-
-    #tabs div:hover {
-      background-color: #ddd;
-    }
-
-    /* 各タブごとのアクティブ時のスタイル */
-    #tabs .tab-open.active {
-      background-color: #00c8ff;
-      color: white;
-      border-top: 2px solid #0078d7;
-      font-weight: bold;
-    }
-
-    #tabs .tab-challenge.active {
-      background-color: #ff5733;
-      color: white;
-      border-top: 2px solid #c70039;
-      font-weight: bold;
-    }
-
-    #tabs .tab-regular.active {
-      background-color: #28a745;
-      color: white;
-      border-top: 2px solid #1e7e34;
-      font-weight: bold;
-    }
-
-    #tabs .tab-xmatch.active {
-      background-color: #6f42c1;
-      color: white;
-      border-top: 2px solid #5a32a3;
-      font-weight: bold;
-    }
-
-    #tabs .tab-salmon.active {
-      background-color: #ffc107;
-      color: white;
-      border-top: 2px solid #e0a800;
-      font-weight: bold;
-    }
-  </style>
+  <script src="main.js"></script>
 </head>
 
 <body>
@@ -85,14 +27,14 @@
       <table class="schedule">
         <template v-for="schedule in scheduleOpenList">
           <tr class="date-row">
-            <td colspan="3">2024/12/15</td>
+            <td colspan="3">{{ schedule.dayString }}</td>
           </tr>
           <tr>
             <th>時間</th>
             <th>モード</th>
             <th>ステージ</th>
           </tr>
-          <tr v-for="item in schedule">
+          <tr v-for="item in schedule.scheduleList">
             <td class="time-slot">{{ item.start_time_view }}</td>
             <td>
               {{ item.rule.name }}
@@ -119,14 +61,14 @@
       <table class="schedule">
         <template v-for="schedule in scheduleChallengeList">
           <tr class="date-row">
-            <td colspan="3">2024/12/15</td>
+            <td colspan="3">{{ schedule.dayString }}</td>
           </tr>
           <tr>
             <th>時間</th>
             <th>モード</th>
             <th>ステージ</th>
           </tr>
-          <tr v-for="item in schedule">
+          <tr v-for="item in schedule.scheduleList">
             <td class="time-slot">{{ item.start_time_view }}</td>
             <td>
               {{ item.rule.name }}
@@ -157,43 +99,6 @@
       <p>サーモンのコンテンツをここに表示します。</p>
     </div>
   </div>
-
-  <script>
-    function convertTime(results) {
-      results.forEach(function (result) {
-        const date = new Date(result['start_time']);
-        const hours = date.getHours().toString().padStart(2, "0");
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const timeString = `${hours}:${minutes}～`;
-        result['start_time_view'] = timeString;
-      });
-      return results;
-    }
-
-    var scheduleOpenList = [];
-    var scheduleChallengeList = [];
-    const App1 = {
-      data() {
-        return {
-          scheduleOpenList: scheduleOpenList,
-          scheduleChallengeList: scheduleChallengeList,
-          currentTab: 'open' // 初期表示は「オープン」
-        };
-      }
-    };
-
-    // データを取得
-    axios.get('https://spla3.yuu26.com/api/schedule')
-      .then(response => {
-        scheduleOpenList.push(convertTime(response.data.result.bankara_open));
-        scheduleChallengeList.push(convertTime(response.data.result.bankara_challenge));
-        const app = Vue.createApp(App1);
-        app.mount('#app1');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  </script>
 </body>
 
 </html>
