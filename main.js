@@ -58,6 +58,9 @@ const App1 = {
         },
         pushSchedule(scheduleList, results) {
             for (const result of results) {
+                if (!result['rule']) {
+                    continue;
+                }
                 const schedule = this.searchSchedule(scheduleList, result);
                 schedule.scheduleList.push(result);
             }
