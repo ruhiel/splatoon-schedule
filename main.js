@@ -1,75 +1,93 @@
-function pushSchedule(scheduleList, results) {
-    for (const result of results) {
-        var schedule = searchSchedule(scheduleList, result);
+const ScheduleTable = {
+    props: ['schedules'],
+    template: `
+      <table class="schedule">
+        <template v-for="schedule in schedules">
+          <tr class="date-row">
+            <td colspan="3">{{ schedule.dayString }}</td>
+          </tr>
+          <tr>
+            <th>時間</th>
+            <th>モード</th>
+            <th>ステージ</th>
+          </tr>
+          <tr v-for="item in schedule.scheduleList">
+            <td class="time-slot">{{ item.start_time_view }}</td>
+            <td>{{ item.rule.name }}</td>
+            <td class="stage">
+              <div class="stage-list">
+                <div>
+                  <div class="stage-name">{{ item.stages[0].name }}</div>
+                  <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+                </div>
+                <div>
+                  <div class="stage-name">{{ item.stages[1].name }}</div>
+                  <img :src="item.stages[1].image" :alt="item.stages[1].name" />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </table>
+    `
+};
 
-        schedule['scheduleList'].push(result);
-    }
-}
-
-function searchSchedule(scheduleList, result) {
-    const date = new Date(result['start_time']);
-    const yyyymmdd = new Intl.DateTimeFormat(
-        undefined,
-        {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        }
-    )
-
-    dayString = yyyymmdd.format(date);
-
-    for (const schedule of scheduleList) {
-        if (schedule['dayString'] == dayString) {
-            return schedule;
-        }
-    }
-
-    var newSchedule = {
-        'dayString': dayString,
-        'scheduleList': []
-    }
-
-    scheduleList.push(newSchedule);
-
-    return newSchedule;
-}
-
-function convertTime(results) {
-    for (const result of results) {
-        const date = new Date(result['start_time']);
-        const hours = date.getHours().toString().padStart(2, "0");
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const timeString = `${hours}:${minutes}～`;
-
-        result['start_time_view'] = timeString;
-    }
-
-    return results;
-}
-
-var scheduleOpenList = [];
-var scheduleChallengeList = [];
 const App1 = {
+    components: { ScheduleTable },
     data() {
         return {
-            scheduleOpenList: scheduleOpenList,
-            scheduleChallengeList: scheduleChallengeList,
+            scheduleOpenList: [],
+            scheduleChallengeList: [],
             currentTab: 'open' // 初期表示は「オープン」
         };
+    },
+    mounted() {
+        axios.get('https://spla3.yuu26.com/api/schedule')
+            .then(response => {
+                this.processSchedules(response.data.result.bankara_open, this.scheduleOpenList);
+                this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    },
+    methods: {
+        processSchedules(results, scheduleList) {
+            const convertedResults = this.convertTime(results);
+            this.pushSchedule(scheduleList, convertedResults);
+        },
+        pushSchedule(scheduleList, results) {
+            for (const result of results) {
+                const schedule = this.searchSchedule(scheduleList, result);
+                schedule.scheduleList.push(result);
+            }
+        },
+        searchSchedule(scheduleList, result) {
+            const date = new Date(result.start_time);
+            const dayString = new Intl.DateTimeFormat('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).format(date);
+
+            let schedule = scheduleList.find(s => s.dayString === dayString);
+            if (!schedule) {
+                schedule = { dayString, scheduleList: [] };
+                scheduleList.push(schedule);
+            }
+            return schedule;
+        },
+        convertTime(results) {
+            return results.map(result => {
+                const date = new Date(result.start_time);
+                const hours = date.getHours().toString().padStart(2, "0");
+                const minutes = date.getMinutes().toString().padStart(2, "0");
+                result.start_time_view = `${hours}:${minutes}～`;
+                return result;
+            });
+        }
     }
 };
 
-// データを取得
-axios.get('https://spla3.yuu26.com/api/schedule')
-    .then(response => {
-        convertTime(response.data.result.bankara_open);
-        convertTime(response.data.result.bankara_challenge);
-        pushSchedule(scheduleOpenList, response.data.result.bankara_open);
-        pushSchedule(scheduleChallengeList, response.data.result.bankara_challenge);
-        const app = Vue.createApp(App1);
-        app.mount('#app1');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+const app = Vue.createApp(App1);
+app.mount('#app1');
