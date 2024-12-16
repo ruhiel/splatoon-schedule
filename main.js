@@ -1,6 +1,6 @@
 const ScheduleTable = {
-    props: ['schedules'],
-    template: `
+  props: ['schedules'],
+  template: `
       <table class="schedule">
         <template v-for="schedule in schedules">
           <tr class="date-row">
@@ -33,63 +33,67 @@ const ScheduleTable = {
 };
 
 const App1 = {
-    components: { ScheduleTable },
-    data() {
-        return {
-            scheduleOpenList: [],
-            scheduleChallengeList: [],
-            currentTab: 'open' // 初期表示は「オープン」
-        };
+  components: { ScheduleTable },
+  data() {
+    return {
+      scheduleOpenList: [],
+      scheduleChallengeList: [],
+      scheduleRegularList: [],
+      scheduleXmatchList: [],
+      currentTab: 'open' // 初期表示は「オープン」
+    };
+  },
+  mounted() {
+    axios.get('https://spla3.yuu26.com/api/schedule')
+      .then(response => {
+        this.processSchedules(response.data.result.bankara_open, this.scheduleOpenList);
+        this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
+        this.processSchedules(response.data.result.regular, this.scheduleRegularList);
+        this.processSchedules(response.data.result.x, this.scheduleXmatchList);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  },
+  methods: {
+    processSchedules(results, scheduleList) {
+      const convertedResults = this.convertTime(results);
+      this.pushSchedule(scheduleList, convertedResults);
     },
-    mounted() {
-        axios.get('https://spla3.yuu26.com/api/schedule')
-            .then(response => {
-                this.processSchedules(response.data.result.bankara_open, this.scheduleOpenList);
-                this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    },
-    methods: {
-        processSchedules(results, scheduleList) {
-            const convertedResults = this.convertTime(results);
-            this.pushSchedule(scheduleList, convertedResults);
-        },
-        pushSchedule(scheduleList, results) {
-            for (const result of results) {
-                if (!result['rule']) {
-                    continue;
-                }
-                const schedule = this.searchSchedule(scheduleList, result);
-                schedule.scheduleList.push(result);
-            }
-        },
-        searchSchedule(scheduleList, result) {
-            const date = new Date(result.start_time);
-            const dayString = new Intl.DateTimeFormat('ja-JP', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            }).format(date);
-
-            let schedule = scheduleList.find(s => s.dayString === dayString);
-            if (!schedule) {
-                schedule = { dayString, scheduleList: [] };
-                scheduleList.push(schedule);
-            }
-            return schedule;
-        },
-        convertTime(results) {
-            return results.map(result => {
-                const date = new Date(result.start_time);
-                const hours = date.getHours().toString().padStart(2, "0");
-                const minutes = date.getMinutes().toString().padStart(2, "0");
-                result.start_time_view = `${hours}:${minutes}～`;
-                return result;
-            });
+    pushSchedule(scheduleList, results) {
+      for (const result of results) {
+        if (!result['rule']) {
+          continue;
         }
+        const schedule = this.searchSchedule(scheduleList, result);
+        schedule.scheduleList.push(result);
+      }
+    },
+    searchSchedule(scheduleList, result) {
+      const date = new Date(result.start_time);
+      const dayString = new Intl.DateTimeFormat('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).format(date);
+
+      let schedule = scheduleList.find(s => s.dayString === dayString);
+      if (!schedule) {
+        schedule = { dayString, scheduleList: [] };
+        scheduleList.push(schedule);
+      }
+      return schedule;
+    },
+    convertTime(results) {
+      return results.map(result => {
+        const date = new Date(result.start_time);
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        result.start_time_view = `${hours}:${minutes}～`;
+        return result;
+      });
     }
+  }
 };
 
 const app = Vue.createApp(App1);

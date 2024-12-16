@@ -13,9 +13,9 @@
   <div id="app1">
     <!-- タブ切り替え部分 -->
     <div id="tabs">
-      <div @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }" class="tab-open">オープン</div>
       <div @click="currentTab = 'challenge'" :class="{ active: currentTab === 'challenge' }" class="tab-challenge">チャレンジ
       </div>
+      <div @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }" class="tab-open">オープン</div>
       <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular">レギュラー</div>
       <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch">Xマッチ</div>
       <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモン</div>
@@ -24,14 +24,9 @@
     <!-- スケジュール表示部分 -->
     <schedule-table v-if="currentTab === 'open'" :schedules="scheduleOpenList"></schedule-table>
     <schedule-table v-if="currentTab === 'challenge'" :schedules="scheduleChallengeList"></schedule-table>
+    <schedule-table v-if="currentTab === 'regular'" :schedules="scheduleRegularList"></schedule-table>
+    <schedule-table v-if="currentTab === 'xmatch'" :schedules="scheduleXmatchList"></schedule-table>
 
-    <!-- 他のタブ内容 -->
-    <div v-if="currentTab === 'regular'">
-      <p>レギュラーのコンテンツをここに表示します。</p>
-    </div>
-    <div v-if="currentTab === 'xmatch'">
-      <p>Xマッチのコンテンツをここに表示します。</p>
-    </div>
     <div v-if="currentTab === 'salmon'">
       <p>サーモンのコンテンツをここに表示します。</p>
     </div>
