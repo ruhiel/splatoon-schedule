@@ -99,35 +99,35 @@ body {
 
 /* 各タブごとのアクティブ時のスタイル */
 #tabs .tab-open.active {
-    background-color: #00c8ff;
+    background-color: #f64911;
     color: white;
-    border-top: 2px solid #0078d7;
+    border-top: 2px solid #c70039;
     font-weight: bold;
 }
 
 #tabs .tab-challenge.active {
-    background-color: #ff5733;
+    background-color: #f64911;
     color: white;
     border-top: 2px solid #c70039;
     font-weight: bold;
 }
 
 #tabs .tab-regular.active {
-    background-color: #28a745;
+    background-color: #a9ff1b;
     color: white;
     border-top: 2px solid #1e7e34;
     font-weight: bold;
 }
 
 #tabs .tab-xmatch.active {
-    background-color: #6f42c1;
+    background-color: #0fdb9b;
     color: white;
     border-top: 2px solid #5a32a3;
     font-weight: bold;
 }
 
 #tabs .tab-salmon.active {
-    background-color: #ffc107;
+    background-color: #f75e3c;
     color: white;
     border-top: 2px solid #e0a800;
     font-weight: bold;
