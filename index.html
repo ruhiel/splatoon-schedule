@@ -20,6 +20,9 @@
       <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch">Xマッチ</div>
       <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモンラン</div>
       <div @click="currentTab = 'event'" :class="{ active: currentTab === 'event' }" class="tab-event">イベント</div>
+      <div @click="currentTab = 'fest'" :class="{ active: currentTab === 'fest' }" class="tab-fest">フェス(オープン)</div>
+      <div @click="currentTab = 'festchallenge'" :class="{ active: currentTab === 'festchallenge' }"
+        class="tab-festchallenge">フェス(チャレンジ)</div>
     </div>
 
     <!-- スケジュール表示部分 -->
@@ -57,6 +60,16 @@
         </tr>
       </template>
     </table>
+
+    <schedule-table v-if="currentTab === 'fest'" :schedules="scheduleFestList"></schedule-table>
+    <div v-if="currentTab === 'fest' && scheduleFestList.length == 0">
+      現在フェス(オープン)は開催されていません。
+    </div>
+
+    <schedule-table v-if="currentTab === 'festchallenge'" :schedules="scheduleFestChallengeList"></schedule-table>
+    <div v-if="currentTab === 'festchallenge' && scheduleFestChallengeList.length == 0">
+      現在フェス(チャレンジ)は開催されていません。
+    </div>
 
     <div v-if="currentTab === 'salmon'">
       <p>サーモンランのコンテンツをここに表示します。</p>

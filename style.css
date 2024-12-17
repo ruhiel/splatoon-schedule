@@ -101,41 +101,49 @@ body {
 #tabs .tab-open.active {
     background-color: #f64911;
     color: white;
-    border-top: 2px solid #c70039;
     font-weight: bold;
 }
 
 #tabs .tab-challenge.active {
     background-color: #f64911;
     color: white;
-    border-top: 2px solid #c70039;
     font-weight: bold;
 }
 
 #tabs .tab-regular.active {
     background-color: #a9ff1b;
     color: white;
-    border-top: 2px solid #1e7e34;
     font-weight: bold;
 }
 
 #tabs .tab-xmatch.active {
     background-color: #0fdb9b;
     color: white;
-    border-top: 2px solid #5a32a3;
     font-weight: bold;
 }
 
 #tabs .tab-salmon.active {
     background-color: #f75e3c;
     color: white;
-    border-top: 2px solid #e0a800;
     font-weight: bold;
 }
 
 #tabs .tab-event.active {
     background-color: #f02d7b;
     color: white;
-    border-top: 2px solid #e0a800;
+    font-weight: bold;
+}
+
+#tabs .tab-fest.active {
+    background: linear-gradient(to right, #29f6ad 33%, #fc6127 33%, #fc6127 66%, #0835ff 66%);
+    color: white;
+    /* 任意の境界線色 */
+    font-weight: bold;
+}
+
+#tabs .tab-festchallenge.active {
+    background: linear-gradient(to right, #29f6ad 33%, #fc6127 33%, #fc6127 66%, #0835ff 66%);
+    color: white;
+    /* 任意の境界線色 */
     font-weight: bold;
 }

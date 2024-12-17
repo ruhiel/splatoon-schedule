@@ -41,6 +41,8 @@ const App1 = {
       scheduleRegularList: [],
       scheduleXmatchList: [],
       scheduleEventList: [],
+      scheduleFestList: [],
+      scheduleFestChallengeList: [],
       currentTab: 'open' // 初期表示は「オープン」
     };
   },
@@ -52,6 +54,8 @@ const App1 = {
         this.processSchedules(response.data.result.regular, this.scheduleRegularList);
         this.processSchedules(response.data.result.x, this.scheduleXmatchList);
         this.processSchedules(response.data.result.event, this.scheduleEventList);
+        this.processSchedules(response.data.result.fest, this.scheduleFestList);
+        this.processSchedules(response.data.result.fest_challenge, this.scheduleFestChallengeList);
       })
       .catch(error => {
         console.error('Error:', error);
