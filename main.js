@@ -8,7 +8,7 @@ const ScheduleTable = {
           </tr>
           <tr>
             <th>時間</th>
-            <th>モード</th>
+            <th>ルール</th>
             <th>ステージ</th>
           </tr>
           <tr v-for="item in schedule.scheduleList">
