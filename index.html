@@ -18,7 +18,8 @@
       <div @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }" class="tab-open">オープン</div>
       <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular">レギュラー</div>
       <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch">Xマッチ</div>
-      <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモン</div>
+      <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモンラン</div>
+      <div @click="currentTab = 'event'" :class="{ active: currentTab === 'event' }" class="tab-event">イベント</div>
     </div>
 
     <!-- スケジュール表示部分 -->
@@ -26,9 +27,39 @@
     <schedule-table v-if="currentTab === 'challenge'" :schedules="scheduleChallengeList"></schedule-table>
     <schedule-table v-if="currentTab === 'regular'" :schedules="scheduleRegularList"></schedule-table>
     <schedule-table v-if="currentTab === 'xmatch'" :schedules="scheduleXmatchList"></schedule-table>
+    <table v-if="currentTab === 'event'" class="schedule">
+      <template v-for="schedule in scheduleEventList">
+        <tr class="date-row">
+          <td colspan="4">{{ schedule.dayString }}</td>
+        </tr>
+        <tr>
+          <th>時間</th>
+          <th>イベント</th>
+          <th>モード</th>
+          <th>ステージ</th>
+        </tr>
+        <tr v-for="item in schedule.scheduleList">
+          <td class="time-slot">{{ item.start_time_view }}</td>
+          <td>{{ item.event.name }}</td>
+          <td>{{ item.rule.name }}</td>
+          <td class="stage">
+            <div class="stage-list">
+              <div>
+                <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+                <div class="stage-name">{{ item.stages[0].name }}</div>
+              </div>
+              <div>
+                <img :src="item.stages[1].image" :alt="item.stages[1].name" />
+                <div class="stage-name">{{ item.stages[1].name }}</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </table>
 
     <div v-if="currentTab === 'salmon'">
-      <p>サーモンのコンテンツをここに表示します。</p>
+      <p>サーモンランのコンテンツをここに表示します。</p>
     </div>
   </div>
   <script src="main.js"></script>

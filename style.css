@@ -132,3 +132,10 @@ body {
     border-top: 2px solid #e0a800;
     font-weight: bold;
 }
+
+#tabs .tab-event.active {
+    background-color: #f02d7b;
+    color: white;
+    border-top: 2px solid #e0a800;
+    font-weight: bold;
+}

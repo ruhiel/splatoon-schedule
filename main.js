@@ -17,12 +17,12 @@ const ScheduleTable = {
             <td class="stage">
               <div class="stage-list">
                 <div>
-                  <div class="stage-name">{{ item.stages[0].name }}</div>
                   <img :src="item.stages[0].image" :alt="item.stages[0].name" />
+                  <div class="stage-name">{{ item.stages[0].name }}</div>
                 </div>
                 <div>
-                  <div class="stage-name">{{ item.stages[1].name }}</div>
                   <img :src="item.stages[1].image" :alt="item.stages[1].name" />
+                  <div class="stage-name">{{ item.stages[1].name }}</div>
                 </div>
               </div>
             </td>
@@ -40,6 +40,7 @@ const App1 = {
       scheduleChallengeList: [],
       scheduleRegularList: [],
       scheduleXmatchList: [],
+      scheduleEventList: [],
       currentTab: 'open' // 初期表示は「オープン」
     };
   },
@@ -50,6 +51,7 @@ const App1 = {
         this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
         this.processSchedules(response.data.result.regular, this.scheduleRegularList);
         this.processSchedules(response.data.result.x, this.scheduleXmatchList);
+        this.processSchedules(response.data.result.event, this.scheduleEventList);
       })
       .catch(error => {
         console.error('Error:', error);
