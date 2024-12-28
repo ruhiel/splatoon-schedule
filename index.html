@@ -14,16 +14,19 @@
   <div id="app1">
     <!-- タブ切り替え部分 -->
     <div id="tabs">
-      <div @click="currentTab = 'challenge'" :class="{ active: currentTab === 'challenge' }" class="tab-challenge">チャレンジ
+      <div v-if="scheduleChallengeList.length != 0" @click="currentTab = 'challenge'"
+        :class="{ active: currentTab === 'challenge' }" class="tab-challenge">チャレンジ
       </div>
-      <div @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }" class="tab-open">オープン</div>
+      <div v-if="scheduleOpenList.length != 0" @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }"
+        class="tab-open">オープン</div>
+      <div v-if="scheduleFestChallengeList.length != 0" @click="currentTab = 'festchallenge'"
+        :class="{ active: currentTab === 'festchallenge' }" class="tab-festchallenge">フェス(チャレンジ)</div>
+      <div v-if="scheduleFestList.length != 0" @click="currentTab = 'fest'" :class="{ active: currentTab === 'fest' }"
+        class="tab-fest">フェス(オープン)</div>
       <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular">レギュラー</div>
       <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch">Xマッチ</div>
       <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon">サーモンラン</div>
       <div @click="currentTab = 'event'" :class="{ active: currentTab === 'event' }" class="tab-event">イベント</div>
-      <div @click="currentTab = 'festchallenge'" :class="{ active: currentTab === 'festchallenge' }"
-        class="tab-festchallenge">フェス(チャレンジ)</div>
-      <div @click="currentTab = 'fest'" :class="{ active: currentTab === 'fest' }" class="tab-fest">フェス(オープン)</div>
     </div>
 
     <!-- スケジュール表示部分 -->
