@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>スプラスケジュール</title>
+  <title>スプラ3スケジュール</title>
   <script src="https://unpkg.com/vue@3.0.0"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="luxon.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" href="favicon.ico">
 </head>
@@ -81,16 +82,16 @@
     <table v-if="currentTab === 'salmon'" class="schedule">
       <template v-for="schedule in scheduleCoopGroupingList">
         <tr class="date-row">
-          <td colspan="4">{{ schedule.dayString }}</td>
+          <td colspan="4">{{ schedule.period }}</td>
         </tr>
         <tr>
-          <th>時間</th>
+          <th>バイト時間</th>
           <th>ボス</th>
           <th>ステージ</th>
           <th>ブキ</th>
         </tr>
         <tr v-for="item in schedule.scheduleList">
-          <td class="time-slot">{{ item.start_time_view }}</td>
+          <td class="time-slot">{{ item.diff }}</td>
           <td>{{ item.boss.name }}</td>
           <td class="stage">
             <div>

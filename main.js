@@ -91,16 +91,19 @@ const App1 = {
     pushScheduleForCoop(scheduleList, results) {
       for (const result of results) {
         const schedule = this.searchSchedule(scheduleList, result);
+        const startDate = new Date(result.start_time);
+        const endDate = new Date(result.end_time);
+        const start_dt = luxon.DateTime.fromJSDate(startDate);
+        const end_dt = luxon.DateTime.fromJSDate(endDate);
+
+        schedule.period = start_dt.toFormat('yyyy/MM/dd HH:mm ～ ') + end_dt.toFormat('yyyy/MM/dd HH:mm');
         schedule.scheduleList.push(result);
       }
     },
     searchSchedule(scheduleList, result) {
       const date = new Date(result.start_time);
-      const dayString = new Intl.DateTimeFormat('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      }).format(date);
+      const start_dt = luxon.DateTime.fromJSDate(date);
+      const dayString = start_dt.toFormat('yyyy/MM/dd');
 
       let schedule = scheduleList.find(s => s.dayString === dayString);
       if (!schedule) {
@@ -111,10 +114,16 @@ const App1 = {
     },
     convertTime(results) {
       return results.map(result => {
-        const date = new Date(result.start_time);
-        const hours = date.getHours().toString().padStart(2, "0");
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        result.start_time_view = `${hours}:${minutes}～`;
+        const startDate = new Date(result.start_time);
+        const endDate = new Date(result.end_time);
+
+        const start_dt = luxon.DateTime.fromJSDate(startDate);
+        const end_dt = luxon.DateTime.fromJSDate(endDate);
+
+        result.start_time_view = start_dt.toFormat('HH:mm～');
+        const diff = end_dt.diff(start_dt, 'hours');
+        result.diff = diff.hours + '時間';
+
         return result;
       });
     }
