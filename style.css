@@ -94,6 +94,7 @@ body {
     justify-content: center;
     margin: 20px 0;
     border-bottom: 2px solid #ccc;
+    align-items: center;
 }
 
 #tabs div {
@@ -115,6 +116,14 @@ body {
     background-color: #f64911;
     color: white;
     font-weight: bold;
+}
+
+#tabs .mode {
+    margin-right: 8px;
+    /* 画像とテキストの間にスペースを追加 */
+    display: inline-block;
+    /* 必要なら明示的にインラインブロックにする */
+    width: 20px;
 }
 
 #tabs .tab-challenge.active {
