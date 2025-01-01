@@ -185,3 +185,7 @@ body {
 .back-to-top:hover {
     background-color: #0056b3;
 }
+
+.boss {
+    width: 100px;
+}

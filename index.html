@@ -85,14 +85,19 @@
           <td colspan="4">{{ schedule.period }}</td>
         </tr>
         <tr>
-          <th>バイト時間</th>
+          <th>時間</th>
           <th>ボス</th>
           <th>ステージ</th>
           <th>ブキ</th>
         </tr>
         <tr v-for="item in schedule.scheduleList">
           <td class="time-slot">{{ item.diff }}</td>
-          <td>{{ item.boss.name }}</td>
+          <td>
+            <div>
+              <img class="boss" :src="item.boss_image" :alt="item.boss.name" />
+              <div class="stage-name">{{ item.boss.name }}</div>
+            </div>
+          </td>
           <td class="stage">
             <div>
               <img :src="item.stage.image" :alt="item.stage.name" />

@@ -103,14 +103,16 @@ const App1 = {
         const start_dt = luxon.DateTime.fromJSDate(startDate);
         const end_dt = luxon.DateTime.fromJSDate(endDate);
 
-        schedule.period = start_dt.toFormat('yyyy/MM/dd HH:mm ～ ') + end_dt.toFormat('yyyy/MM/dd HH:mm');
+        result.boss_image = "img/" + result.boss.name + ".png"
+
+        schedule.period = start_dt.setLocale('ja').toFormat('yyyy/MM/dd(EEE) HH:mm ～ ') + end_dt.setLocale('ja').toFormat('yyyy/MM/dd(EEE) HH:mm');
         schedule.scheduleList.push(result);
       }
     },
     searchSchedule(scheduleList, result) {
       const date = new Date(result.start_time);
       const start_dt = luxon.DateTime.fromJSDate(date);
-      const dayString = start_dt.toFormat('yyyy/MM/dd');
+      const dayString = start_dt.setLocale('ja').toFormat('yyyy/MM/dd(EEE)');
 
       let schedule = scheduleList.find(s => s.dayString === dayString);
       if (!schedule) {
