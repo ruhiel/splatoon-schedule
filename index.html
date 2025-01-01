@@ -78,9 +78,50 @@
       現在フェス(オープン)は開催されていません。
     </div>
 
-    <div v-if="currentTab === 'salmon'">
-      <p>サーモンランのコンテンツをここに表示します。</p>
-    </div>
+    <table v-if="currentTab === 'salmon'" class="schedule">
+      <template v-for="schedule in scheduleCoopGroupingList">
+        <tr class="date-row">
+          <td colspan="4">{{ schedule.dayString }}</td>
+        </tr>
+        <tr>
+          <th>時間</th>
+          <th>ボス</th>
+          <th>ステージ</th>
+          <th>ブキ</th>
+        </tr>
+        <tr v-for="item in schedule.scheduleList">
+          <td class="time-slot">{{ item.start_time_view }}</td>
+          <td>{{ item.boss.name }}</td>
+          <td class="stage">
+            <div>
+              <img :src="item.stage.image" :alt="item.stage.name" />
+              <div class="stage-name">{{ item.stage.name }}</div>
+            </div>
+          </td>
+          <td class="weapon">
+            <div class="weapons-list">
+              <div>
+                <img :src="item.weapons[0].image" :alt="item.weapons[0].name" />
+                <div class="stage-name">{{ item.weapons[0].name }}</div>
+              </div>
+              <div>
+                <img :src="item.weapons[1].image" :alt="item.weapons[1].name" />
+                <div class="stage-name">{{ item.weapons[1].name }}</div>
+              </div>
+              <div>
+                <img :src="item.weapons[2].image" :alt="item.weapons[2].name" />
+                <div class="stage-name">{{ item.weapons[2].name }}</div>
+              </div>
+              <div>
+                <img :src="item.weapons[3].image" :alt="item.weapons[3].name" />
+                <div class="stage-name">{{ item.weapons[3].name }}</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </table>
+
   </div>
   <script src="main.js"></script>
 </body>

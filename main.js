@@ -43,6 +43,7 @@ const App1 = {
       scheduleEventList: [],
       scheduleFestList: [],
       scheduleFestChallengeList: [],
+      scheduleCoopGroupingList: [],
       currentTab: 'open' // 初期表示は「オープン」
     };
   },
@@ -60,17 +61,35 @@ const App1 = {
       .catch(error => {
         console.error('Error:', error);
       });
+
+    axios.get('https://spla3.yuu26.com/api/coop-grouping/schedule')
+      .then(response => {
+        this.processSchedulesForCoop(response.data.results, this.scheduleCoopGroupingList);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   },
   methods: {
     processSchedules(results, scheduleList) {
       const convertedResults = this.convertTime(results);
       this.pushSchedule(scheduleList, convertedResults);
     },
+    processSchedulesForCoop(results, scheduleList) {
+      const convertedResults = this.convertTime(results);
+      this.pushScheduleForCoop(scheduleList, convertedResults);
+    },
     pushSchedule(scheduleList, results) {
       for (const result of results) {
         if (!result['rule']) {
           continue;
         }
+        const schedule = this.searchSchedule(scheduleList, result);
+        schedule.scheduleList.push(result);
+      }
+    },
+    pushScheduleForCoop(scheduleList, results) {
+      for (const result of results) {
         const schedule = this.searchSchedule(scheduleList, result);
         schedule.scheduleList.push(result);
       }

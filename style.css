@@ -50,9 +50,22 @@ body {
     border-radius: 5px;
 }
 
+.weapon img {
+    width: 200px;
+    height: auto;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
 .stage-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.weapons-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
 
