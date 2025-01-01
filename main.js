@@ -44,6 +44,7 @@ const App1 = {
       scheduleFestList: [],
       scheduleFestChallengeList: [],
       scheduleCoopGroupingList: [],
+      isVisible: false, // ボタンの表示/非表示
       currentTab: 'open' // 初期表示は「オープン」
     };
   },
@@ -69,6 +70,12 @@ const App1 = {
       .catch(error => {
         console.error('Error:', error);
       });
+    // スクロールイベントを監視
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    // コンポーネントが破棄されるときにイベントを解除
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     processSchedules(results, scheduleList) {
@@ -126,7 +133,15 @@ const App1 = {
 
         return result;
       });
-    }
+    },
+    handleScroll() {
+      // スクロール位置が100pxを超えたらボタンを表示
+      this.isVisible = window.scrollY > 100;
+    },
+    scrollToTop() {
+      // スムーズにトップへスクロール
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
   }
 };
 

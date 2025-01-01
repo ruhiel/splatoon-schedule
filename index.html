@@ -122,7 +122,9 @@
         </tr>
       </template>
     </table>
-
+    <button class="back-to-top" :class="{ show: isVisible }" @click="scrollToTop">
+      ↑ トップへ戻る
+    </button>
   </div>
   <script src="main.js"></script>
 </body>
