@@ -17,23 +17,24 @@
     <div id="tabs">
       <div v-if="scheduleChallengeList.length != 0" @click="currentTab = 'challenge'"
         :class="{ active: currentTab === 'challenge' }" class="tab-challenge">
-        <img class="mode" src="img/バンカラ.png" />チャレンジ
+        <img class="mode" src="img/バンカラ.png" />
+        <span>チャレンジ</span>
       </div>
       <div v-if="scheduleOpenList.length != 0" @click="currentTab = 'open'" :class="{ active: currentTab === 'open' }"
-        class="tab-open"><img class="mode" src="img/バンカラ.png" />オープン</div>
+        class="tab-open"><img class="mode" src="img/バンカラ.png" /><span>オープン</span></div>
       <div v-if="scheduleFestChallengeList.length != 0" @click="currentTab = 'festchallenge'"
         :class="{ active: currentTab === 'festchallenge' }" class="tab-festchallenge"><img class="mode"
-          src="img/フェス.png" />フェス(チャレンジ)</div>
+          src="img/フェス.png" /><span>フェス(チャレンジ)</span></div>
       <div v-if="scheduleFestList.length != 0" @click="currentTab = 'fest'" :class="{ active: currentTab === 'fest' }"
-        class="tab-fest"><img class="mode" src="img/フェス.png" />フェス(オープン)</div>
+        class="tab-fest"><img class="mode" src="img/フェス.png" /><span>フェス(オープン)</span></div>
       <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular"><img
-          class="mode" src="img/レギュラー.png" />レギュラー</div>
+          class="mode" src="img/レギュラー.png" /><span>レギュラー</span></div>
       <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch"><img
-          class="mode" src="img/Xマッチ.png" />Xマッチ</div>
+          class="mode" src="img/Xマッチ.png" /><span>Xマッチ</span></div>
       <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon"><img
-          class="mode" src="img/サーモンラン.png" />サーモンラン</div>
+          class="mode" src="img/サーモンラン.png" /><span>サーモンラン</span></div>
       <div @click="currentTab = 'event'" :class="{ active: currentTab === 'event' }" class="tab-event"><img class="mode"
-          src="img/イベント.png" />イベント</div>
+          src="img/イベント.png" /><span>イベント</span></div>
     </div>
 
     <!-- スケジュール表示部分 -->

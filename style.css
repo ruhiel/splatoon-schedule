@@ -98,6 +98,11 @@ body {
 }
 
 #tabs div {
+    display: flex;
+    align-items: center;
+    /* 垂直方向の中央揃え */
+    justify-content: center;
+    /* 横方向の中央揃え */
     padding: 10px 20px;
     margin: 0;
     font-size: 16px;
@@ -105,6 +110,21 @@ body {
     border: 1px solid #ccc;
     border-bottom: none;
     background-color: #f9f9f9;
+}
+
+#tabs div img.mode {
+    margin-right: 8px;
+    /* 画像と文字の間にスペースを追加 */
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    /* 画像が文字の中間に揃う */
+}
+
+#tabs div span {
+    line-height: 30px;
+    /* 文字の高さを画像と同じに設定 */
+    display: inline-block;
 }
 
 #tabs div:hover {
