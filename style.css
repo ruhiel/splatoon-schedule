@@ -1,8 +1,64 @@
+/* スマホ対応CSSの修正 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ビューポート設定とメディアクエリ */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .schedule-item {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .schedule-item img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .header {
+        text-align: center;
+    }
+}
+
+/* デスクトップ用デザインの保持 */
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.schedule-item img {
+    max-width: 150px;
+    height: auto;
+}
+
+.header {
+    text-align: left;
+    font-size: 24px;
 }
 
 .schedule {
