@@ -129,7 +129,12 @@ const App1 = {
         const start_dt = luxon.DateTime.fromJSDate(startDate);
         const end_dt = luxon.DateTime.fromJSDate(endDate);
 
-        result.start_time_view = start_dt.toFormat('HH:mm ～ ') + end_dt.toFormat('HH:mm');
+        if (start_dt.hasSame(end_dt, 'day')) {
+          result.start_time_view = start_dt.toFormat('HH:mm ～ ') + end_dt.toFormat('HH:mm');
+        } else {
+          result.start_time_view = start_dt.toFormat('HH:mm ～ ') + end_dt.toFormat('MM/dd HH:mm');
+        }
+
         const diff = end_dt.diff(start_dt, 'hours');
         result.diff = diff.hours + '時間';
 
