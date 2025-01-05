@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
-    padding: 0;
+    padding: 60px 0 0 0;
+    /* 上側にタブの高さ分 (60px) の余白を追加 */
 }
 
 .schedule {
@@ -92,9 +93,22 @@ body {
 #tabs {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
-    border-bottom: 2px solid #ccc;
     align-items: center;
+    position: fixed;
+    /* 固定表示 */
+    top: 0;
+    /* 画面上部に固定 */
+    left: 0;
+    /* 左端から配置 */
+    width: 100%;
+    /* 横幅いっぱいに広げる */
+    background-color: white;
+    /* 背景色をつけてスクロール時の視認性を確保 */
+    border-bottom: 2px solid #ccc;
+    z-index: 1000;
+    /* 他の要素より前面に表示 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* 軽い影をつける */
 }
 
 #tabs div {
@@ -217,4 +231,37 @@ body {
 
 .boss {
     width: 100px;
+}
+
+footer {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    margin-top: 20px;
+}
+
+footer a {
+    color: #888;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-icon {
+    width: 24px;
+    /* アイコンのサイズを調整 */
+    height: 24px;
+    margin: 0 5px;
+    /* アイコン間の余白 */
+    vertical-align: middle;
+    opacity: 0.8;
+    /* 控えめに表示 */
+    transition: opacity 0.3s;
+}
+
+.footer-icon:hover {
+    opacity: 1;
+    /* ホバー時に明るく */
 }
