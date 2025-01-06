@@ -49,27 +49,31 @@ const App1 = {
     };
   },
   mounted() {
-    axios.get('https://spla3.yuu26.com/api/schedule')
-      .then(response => {
-        this.processSchedules(response.data.result.bankara_open, this.scheduleOpenList);
-        this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
-        this.processSchedules(response.data.result.regular, this.scheduleRegularList);
-        this.processSchedules(response.data.result.x, this.scheduleXmatchList);
-        this.processSchedules(response.data.result.event, this.scheduleEventList);
-        this.processSchedules(response.data.result.fest, this.scheduleFestList);
-        this.processSchedules(response.data.result.fest_challenge, this.scheduleFestChallengeList);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    const headers = {
+      "User-Agent":
+        "splatoon3-schedule/1.0(twitter@ruhiel_buin)",
+    };
+    axios.get('https://spla3.yuu26.com/api/schedule', {
+      headers,
+    }).then(response => {
+      this.processSchedules(response.data.result.bankara_open, this.scheduleOpenList);
+      this.processSchedules(response.data.result.bankara_challenge, this.scheduleChallengeList);
+      this.processSchedules(response.data.result.regular, this.scheduleRegularList);
+      this.processSchedules(response.data.result.x, this.scheduleXmatchList);
+      this.processSchedules(response.data.result.event, this.scheduleEventList);
+      this.processSchedules(response.data.result.fest, this.scheduleFestList);
+      this.processSchedules(response.data.result.fest_challenge, this.scheduleFestChallengeList);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
 
-    axios.get('https://spla3.yuu26.com/api/coop-grouping/schedule')
-      .then(response => {
-        this.processSchedulesForCoop(response.data.results, this.scheduleCoopGroupingList);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    axios.get('https://spla3.yuu26.com/api/coop-grouping/schedule', {
+      headers,
+    }).then(response => {
+      this.processSchedulesForCoop(response.data.results, this.scheduleCoopGroupingList);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
     // スクロールイベントを監視
     window.addEventListener("scroll", this.handleScroll);
   },
