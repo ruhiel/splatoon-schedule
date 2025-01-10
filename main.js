@@ -58,6 +58,10 @@ const App1 = {
         this.processSchedules(response.data.result.event, this.scheduleEventList);
         this.processSchedules(response.data.result.fest, this.scheduleFestList);
         this.processSchedules(response.data.result.fest_challenge, this.scheduleFestChallengeList);
+        // scheduleOpenListが空の場合、currentTabを'fest'に変更
+        if (this.scheduleOpenList.length === 0) {
+          this.currentTab = 'fest';
+        }
       })
       .catch(error => {
         console.error('Error:', error);
@@ -72,10 +76,6 @@ const App1 = {
       });
     // スクロールイベントを監視
     window.addEventListener("scroll", this.handleScroll);
-    // scheduleOpenListが空の場合、currentTabを'fest'に変更
-    if (this.scheduleOpenList.length === 0) {
-      this.currentTab = 'fest';
-    }
   },
   beforeUnmount() {
     // コンポーネントが破棄されるときにイベントを解除
