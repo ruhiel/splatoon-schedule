@@ -72,6 +72,10 @@ const App1 = {
       });
     // スクロールイベントを監視
     window.addEventListener("scroll", this.handleScroll);
+    // scheduleOpenListが空の場合、currentTabを'fest'に変更
+    if (this.scheduleOpenList.length === 0) {
+      this.currentTab = 'fest';
+    }
   },
   beforeUnmount() {
     // コンポーネントが破棄されるときにイベントを解除
