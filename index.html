@@ -27,10 +27,12 @@
           src="img/フェス.png" /><span>フェス(チャレンジ)</span></div>
       <div v-if="scheduleFestList.length != 0" @click="currentTab = 'fest'" :class="{ active: currentTab === 'fest' }"
         class="tab-fest"><img class="mode" src="img/フェス.png" /><span>フェス(オープン)</span></div>
-      <div @click="currentTab = 'regular'" :class="{ active: currentTab === 'regular' }" class="tab-regular"><img
-          class="mode" src="img/レギュラー.png" /><span>レギュラー</span></div>
-      <div @click="currentTab = 'xmatch'" :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch"><img
-          class="mode" src="img/Xマッチ.png" /><span>Xマッチ</span></div>
+      <div v-if="scheduleRegularList.length != 0" @click="currentTab = 'regular'"
+        :class="{ active: currentTab === 'regular' }" class="tab-regular"><img class="mode"
+          src="img/レギュラー.png" /><span>レギュラー</span></div>
+      <div v-if="scheduleXmatchList.length != 0" @click="currentTab = 'xmatch'"
+        :class="{ active: currentTab === 'xmatch' }" class="tab-xmatch"><img class="mode"
+          src="img/Xマッチ.png" /><span>Xマッチ</span></div>
       <div @click="currentTab = 'salmon'" :class="{ active: currentTab === 'salmon' }" class="tab-salmon"><img
           class="mode" src="img/サーモンラン.png" /><span>サーモンラン</span></div>
       <div @click="currentTab = 'event'" :class="{ active: currentTab === 'event' }" class="tab-event"><img class="mode"
